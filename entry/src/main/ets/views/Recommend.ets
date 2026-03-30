@@ -1,5 +1,5 @@
 import { getSwiper, getDailyRecommend, getRecommendList } from '../apis';
-import { DailyRecommendType, RecommendListType } from '../models';
+import { DailyRecommendType, RecommendListType } from '../models/Index';
 
 @Component
 export default struct Recommend {
@@ -154,7 +154,7 @@ export default struct Recommend {
     .padding({ top: 15, bottom: 10, left: 8, right: 8 })
   }
   build() {
-    Scroll() {
+    Scroll() {  //滑动组件
       Column() {
         this.searchBuilder()
         this.swiperBuilder()
