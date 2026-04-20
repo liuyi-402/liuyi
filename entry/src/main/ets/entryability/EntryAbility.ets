@@ -1,3 +1,4 @@
+import AVPlayerManager from '../utils/AVPlayerManager';
 import { AbilityConstant, ConfigurationConstant, UIAbility, Want } from '@kit.AbilityKit';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { window } from '@kit.ArkUI';
@@ -40,6 +41,7 @@ export default class EntryAbility extends UIAbility {
       const navigationArea = mainWindow.getWindowAvoidArea(window.AvoidAreaType.TYPE_NAVIGATION_INDICATOR);
       const safeBottom = mainWindow.getUIContext().px2vp(navigationArea.bottomRect.height);
       AppStorage.setOrCreate(SAFE_BOTTOM, safeBottom);
+      AVPlayerManager.init();
     });
 
   }

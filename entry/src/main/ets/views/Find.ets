@@ -1,3 +1,4 @@
+import AVPlayerManager from '../utils/AVPlayerManager';
 import { getSongList } from '../apis';
 import { SongItemType } from '../models/Index';
 
@@ -55,9 +56,12 @@ export default struct Find {
             }
             .width('100%')
             .margin({ bottom: 10 })
-            .onClick(() => { //新增
-              this.router.pushUrl({ url: 'pages/Play' }); //这里用的pushUrl
+            .onClick(() => {
+              // 播放当前点击的歌曲
+              AVPlayerManager.singPlay(item); //
+              this.router.pushUrl({ url: 'pages/Play' });
             })
+
           }
         })
       }
