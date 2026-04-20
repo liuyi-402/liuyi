@@ -4,6 +4,7 @@ import { SongItem, PlayState } from '../models/Index';
 @Entry
 @Component
 struct Play {
+  router = this.getUIContext().getRouter();
   @StorageLink(SONG_KEY) // changed from @State
   @Watch('changeAnimate')
   playState: PlayState = new PlayState();
@@ -21,6 +22,23 @@ struct Play {
     begin: 0,
     end: 360
   })
+
+  @Builder
+  deleteButton(index: number) {
+    Button('删除')
+      .backgroundColor('#ec5c87')
+      .fontColor('#fff')
+      .width(80)
+      .height('100%')
+      .type(ButtonType.Normal)
+      .onClick(() => {
+        if (AVPlayerManager.currentSong.playList.length <= 1) {
+          this.router.back();
+        }
+        AVPlayerManager.remove(index);
+      })
+  }
+
   number2time(number: number) {
     // 判断是否大于1分钟
     if (number >= 60 * 1000) {
@@ -289,6 +307,7 @@ struct Play {
                     Text((index + 1).toString())
                       .fontColor('#ffa49a9a')
                   }
+
                   .width(50)
                   .aspectRatio(1)
                   .justifyContent(FlexAlign.Center)
@@ -307,6 +326,10 @@ struct Play {
                     .justifyContent(FlexAlign.Center)
                   }
                   .layoutWeight(1)
+                  .onClick(() => {
+                    AVPlayerManager.singPlay(this.playState.playList[index]);
+                  })
+
                   Image($r('app.media.ic_more'))
                     .width(24)
                     .height(24)
@@ -315,6 +338,7 @@ struct Play {
                 }
                 .alignItems(VerticalAlign.Center)
               }
+              .swipeAction({  end: this.deleteButton(index) })
               .border({ width: { bottom: 1 }, color: '#12ec5c87' })
             })
           }
