@@ -1,3 +1,4 @@
+import AVSessionManager from '../utils/AVSessionManager';
 import AVPlayerManager from '../utils/AVPlayerManager';
 import { AbilityConstant, ConfigurationConstant, UIAbility, Want } from '@kit.AbilityKit';
 import { hilog } from '@kit.PerformanceAnalysisKit';
@@ -23,6 +24,10 @@ export default class EntryAbility extends UIAbility {
   onWindowStageCreate(windowStage: window.WindowStage): void {
     // Main window is created, set main page for this ability
     hilog.info(DOMAIN, 'testTag', '%{public}s', 'Ability onWindowStageCreate');
+
+    // 初始化播放器
+    AVPlayerManager.init();
+    AVSessionManager.init(this.context);
 
     windowStage.loadContent('pages/Start', (err) => {
       // 获取主窗口对象
